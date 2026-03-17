@@ -1,26 +1,29 @@
-# WordPress-Anti-Spam-Guide
-🛡️ WordPress Anti-Spam Guide
+# 🛡️ Guia Anti-Spam para WordPress
 
-Este guia prático foi criado para administradores de sites WordPress que enfrentam ataques massivos de bots e comentários de spam. Siga estas etapas para limpar seu banco de dados e blindar o site de novos ataques.
+Este repositório contém um guia prático e configurações prontas para limpar e blindar sites WordPress contra ataques massivos de robôs e comentários de spam.
 
-🚀 1. Limpeza Rápida (Bulk Actions)
-Se o volume de spam for pequeno (centenas), use a interface nativa:
+---
 
-Vá em Comentários > Pendentes.
+## 🚀 1. Limpeza em Massa (Interface WP)
 
-Clique em Opções de Tela (topo direito) e mude para 100 ou 200 itens por página.
+Se o volume de spam for moderado, use as **Ações em Massa** nativas:
 
-Marque a caixa "Selecionar Todos".
+1. Acesse **Comentários > Pendentes**.
+2. No topo direito, clique em **Opções de Tela**.
+3. Altere o "Número de itens por página" para `100` ou `200`.
+4. Marque a caixa de seleção global (ao lado de 'Autor').
+5. No menu **Ações em Massa**, selecione **Mover para o Lixo** e clique em **Aplicar**.
 
-Em Ações em Massa, escolha Mover para o lixo.
+---
 
-🐘 2. Limpeza Profunda (via SQL / phpMyAdmin)
-Se o site tiver milhares de comentários, o WordPress pode travar. Use estes comandos SQL no seu banco de dados para uma limpeza instantânea:
+## 🐘 2. Limpeza Profunda (via SQL / phpMyAdmin)
 
-⚠️ Atenção: Faça um backup do banco de dados antes de executar.
+Para sites com milhares de comentários travando o painel, execute estes comandos no **SQL** do seu banco de dados:
 
-SQL
--- Apagar todos os comentários que aguardam aprovação
+> **⚠️ IMPORTANTE:** Faça um backup do banco de dados antes de executar.
+
+```sql
+-- Apagar todos os comentários pendentes de uma vez
 DELETE FROM wp_comments WHERE comment_approved = '0';
 
 -- Apagar comentários marcados como SPAM
@@ -28,23 +31,10 @@ DELETE FROM wp_comments WHERE comment_approved = 'spam';
 
 -- Limpar metadados órfãos (otimização após a limpeza)
 DELETE FROM wp_commentmeta WHERE comment_id NOT IN (SELECT comment_ID FROM wp_comments);
-Nota: Se o seu prefixo de tabela não for wp_, ajuste para o seu (ex: wp74_comments).
 
-🛠️ 3. Configurações de Blindagem Nativa
-No painel, vá em Configurações > Discussão e aplique estas travas:
+Nota: Se o prefixo das suas tabelas não for wp_, ajuste o comando (ex: wp74_comments).
 
-Moderação Estratégica
-Restrição de Links: Mude para 1 o valor de "Reter um comentário na fila se este contiver X ou mais links".
-
-Comentários antigos: Ative "Encerrar automaticamente comentários em posts com mais de 30 dias".
-
-Identificação: Marque "O autor do comentário tem que preencher o nome e e-mail".
-
-Lista Negra de Palavras (Blacklist)
-No campo "Comentários não permitidos", cole a lista abaixo (uma por linha, sem vírgulas). Isso moverá o comentário diretamente para a lixeira:
-
-Plaintext
-http://
+🛡️ 3. Configuração de Blindagem NativaAcesse Configurações > Discussão no painel administrativo e aplique os seguintes ajustes para reduzir drasticamente o trabalho manual:ConfiguraçãoAção NecessáriaMotivoModeração de LinksAlterar para 1Bots raramente comentam sem incluir um link.Fechamento AutomáticoAtivar para 30 diasEvita ataques em posts antigos que não estão sob vigilância.ObrigatoriedadeMarcar "Nome e E-mail"Cria uma barreira básica contra scripts simples.Aprovação ManualManter Sempre AtivoGarante que nenhum spam apareça publicamente.🚫 4. Blacklist de Termos ProibidosO campo "Comentários não permitidos" é a sua ferramenta mais poderosa. Qualquer comentário que contenha um dos termos abaixo será movido diretamente para a lixeira, poupando sua fila de moderação.[!IMPORTANT]Regra de Ouro: Cole uma palavra por linha. Não use vírgulas ou outros separadores.Lista para Copiar e Colar:Plaintexthttp://
 https://
 .ru
 .top
@@ -76,16 +66,4 @@ discount
 free gift
 essay help
 write my paper
-🔌 4. Plugins Recomendados
-Para uma solução "instale e esqueça":
-
-Antispam Bee: Gratuito, cumpre a LGPD e não usa CAPTCHA chato.
-
-Akismet: O padrão da indústria (requer chave API).
-
-Disable Comments: Use se o site do seu cliente for institucional e não precisar de seção de comentários.
-
-📝 Contribuição
-Sinta-se à vontade para enviar um Pull Request com novos termos para a blacklist ou dicas de segurança para WordPress.
-
-Guia criado para proteção de sites de clientes e otimização de performance.
+🔌 5. Plugins RecomendadosPara uma camada de inteligência extra (filtro de comportamento e banco de dados global de spam):Antispam Bee: 🏆 Melhor escolha. Gratuito, extremamente leve e totalmente em conformidade com a LGPD/GDPR (não envia dados para servidores externos).Akismet Anti-Spam: A solução oficial da Automattic. Muito robusta, mas exige chave API e é paga para sites comerciais.Disable Comments: A solução radical. Se o site do cliente não precisa de interação, use este plugin para remover completamente o sistema de comentários do banco de dados.📝 Mantido por: [Seu Nome/GitHub]🤝 Contribuições: Sinta-se à vontade para abrir um Pull Request com novos termos para a lista de bloqueio.
