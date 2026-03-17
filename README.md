@@ -34,7 +34,17 @@ DELETE FROM wp_commentmeta WHERE comment_id NOT IN (SELECT comment_ID FROM wp_co
 
 Nota: Se o prefixo das suas tabelas não for wp_, ajuste o comando (ex: wp74_comments).
 
-## 🛡️ 3. Configuração de Blindagem NativaAcesse Configurações > Discussão no painel administrativo e aplique os seguintes ajustes para reduzir drasticamente o trabalho manual:ConfiguraçãoAção NecessáriaMotivoModeração de LinksAlterar para 1Bots raramente comentam sem incluir um link.Fechamento AutomáticoAtivar para 30 diasEvita ataques em posts antigos que não estão sob vigilância.ObrigatoriedadeMarcar "Nome e E-mail"Cria uma barreira básica contra scripts simples.Aprovação ManualManter Sempre AtivoGarante que nenhum spam apareça publicamente.
+## 🛡️ 3. Configuração de Blindagem NativaAcesse Configurações >
+
+Ajustes essenciais em Configurações > Discussão:
+
+Moderação de Links: Altere para 1 o valor de "Reter um comentário na fila se este contiver X ou mais links".
+
+Fechamento Automático: Ative "Encerrar automaticamente comentários em posts com mais de 30 dias".
+
+Obrigatoriedade: Ative "O autor do comentário tem que preencher o nome e e-mail".
+
+Aprovação: Mantenha sempre marcado "O comentário deve ser aprovado manualmente".
 
 ## 🚫 4. Blacklist de Termos ProibidosO campo "Comentários não permitidos" é a sua ferramenta mais poderosa. Qualquer comentário que contenha um dos termos abaixo será movido diretamente para a lixeira, poupando sua fila de moderação.[!IMPORTANT]Regra de Ouro: Cole uma palavra por linha. Não use vírgulas ou outros separadores.Lista para Copiar e Colar:Plaintexthttp://
 
